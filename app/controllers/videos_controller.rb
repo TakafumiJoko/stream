@@ -1,9 +1,14 @@
 class VideosController < ApplicationController
 
-  skip_before_action :check_logged_in, only: :new
+  skip_before_action :check_logged_in, only: :index
+  
+  def index
+    @videos = Video.all
+  end
   
   def new
     @video = Video.new
+    @my_channels = current_user.channels
   end
 
   def create
@@ -20,6 +25,6 @@ class VideosController < ApplicationController
   private
 
   def video_params
-    params.require(:video).permit(:title, :introduction, :video)
+    params.require(:video).permit(:title, :introduction, :video, :channel_id)
   end
 end

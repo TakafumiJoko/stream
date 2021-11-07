@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :channels
   has_many :videos
   has_many :comments
   class << self

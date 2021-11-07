@@ -2,5 +2,10 @@
   <p>title</p><%= form.text_field :title %> <br>
   <p>introduction</p><%= form.text_area :introduction %> <br>
   <p>video</p><%= form.file_field :video %> <br>
+  <p>channel</p>
+  <% @my_channels.each do |my_channel| %>
+    <%= form.label my_channel.name %>
+    <%= form.radio_button :channel_id, my_channel.id %>
+  <% end %>
   <%= form.submit %>
 <% end %>

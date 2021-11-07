@@ -4,6 +4,10 @@ class SessionsController < ApplicationController
   
   def create
     if (user = User.find_or_create_from_auth_hash(auth_hash))
+      if user.channels.empty?
+        @channel = user.channels.build(name: user.name)
+        @channel.save
+      end
       log_in user
     end
     redirect_to root_path
