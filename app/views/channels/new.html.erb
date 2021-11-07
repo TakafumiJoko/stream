@@ -1,0 +1,4 @@
+<%= form_with model: [current_user, @channel], local: true do |form| %>
+  <p>name</p><%= form.text_field :name %> <br>
+  <%= form.submit %>
+<% end %>
