@@ -7,13 +7,14 @@ class VideosController < ApplicationController
   end
 
   def create
-    @video = Video.new(video_params)
+    @video = current_user.videos.build(video_params)
     @video.save
     redirect_to @video
   end
 
   def show
     @video = Video.find(params[:id])
+    @comment = Comment.new
   end
 
   private
