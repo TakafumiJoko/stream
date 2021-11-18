@@ -1,6 +1,5 @@
 class User < ApplicationRecord
   has_many :channels
-  has_many :videos
   has_many :comments
   class << self
     def find_or_create_from_auth_hash(auth_hash)

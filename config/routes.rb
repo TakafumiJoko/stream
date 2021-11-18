@@ -1,11 +1,10 @@
 Rails.application.routes.draw do
-  root 'videos#index'
+  root 's3files#new'
   resources :users do
     resources :channels
   end
-  resources :videos do
-    resources :comments
-  end
+  resources :s3files
+  resources :comments
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')
   get 'log_out', to: 'sessions#destroy', as: 'log_out'

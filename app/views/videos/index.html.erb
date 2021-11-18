@@ -1,8 +1,0 @@
-<% @videos.each do |video| %>
-  <% if video.video.attached? %>
-    <p><%= video.title %></p>
-    <p><%= video.introduction %></p>
-    <p><%= video.channel.name %></p>
-    <video src="<%= rails_blob_path(video.video) %>" type="video/mp4" controls></video>
-  <% end %>
-<% end %>
