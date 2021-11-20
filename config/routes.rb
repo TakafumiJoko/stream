@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 's3files#new'
+  root 's3files#index'
   resources :users do
     resources :channels
   end
