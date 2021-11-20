@@ -1,6 +1,6 @@
 class S3filesController < ApplicationController
   
-  skip_before_action :check_logged_in, only: [:new, :index]
+  skip_before_action :check_logged_in, only: [:index]
 
   def new
     @channels = current_user.channels
