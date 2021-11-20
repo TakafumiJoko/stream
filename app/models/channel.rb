@@ -1,4 +1,4 @@
 class Channel < ApplicationRecord
   belongs_to :user
-  has_many :videos
+  has_many :s3files
 end

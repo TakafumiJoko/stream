@@ -1,5 +1,11 @@
-<%= form_for @s3file do |f|%>
-    <%= f.label :key, '動画ファイル'%>
-    <%= f.file_field :key %>
-  <%= f.submit 'アップロード' %>
+<%= form_with model: @s3file do |form|%>
+    <%= form.label :key, '動画ファイル'%>
+    <%= form.file_field :key %>    
+    <%= form.label :image, 'サムネイル'%>
+    <%= form.file_field :image %>
+    <% @channels.each do |channel| %>
+      <%= form.label :channel_id, channel.name, value: channel.id %>
+      <%= form.radio_button :channel_id, "#{channel.id}" %>  
+    <% end %>
+  <%= form.submit 'アップロード' %>
 <% end %>

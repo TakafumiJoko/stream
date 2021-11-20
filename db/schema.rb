@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_10_120647) do
+ActiveRecord::Schema.define(version: 2021_11_20_063943) do
 
   create_table "channels", force: :cascade do |t|
     t.string "name"
@@ -32,6 +32,9 @@ ActiveRecord::Schema.define(version: 2021_11_10_120647) do
     t.string "key"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "channel_id"
+    t.string "image"
+    t.index ["channel_id"], name: "index_s3files_on_channel_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -43,4 +46,5 @@ ActiveRecord::Schema.define(version: 2021_11_10_120647) do
   end
 
   add_foreign_key "channels", "users"
+  add_foreign_key "s3files", "channels"
 end

@@ -3,29 +3,36 @@ class S3filesController < ApplicationController
   skip_before_action :check_logged_in, only: [:new, :index]
 
   def new
-    @s3file = S3file.new()
+    @channels = current_user.channels
+    channel = Channel.new()
+    @s3file = channel.s3files.build
   end
   
   def create
-    file = s3file_params[:key]
     
-    file_path = "tmp/#{file.original_filename}"
+    file = s3file_params[:key]
+    filename = file.original_filename
+    file_path = "tmp/#{filename}"
     File.binwrite(file_path, file.read)
     
-    s3file = S3file.new()
-    s3file.save
-    
-    filename = "assets#{s3file.id.to_s}/#{file.original_filename}"
-    
-    s3file.update_attribute(:key, filename)
+    S3file.create(key: filename, channel_id: s3file_params[:channel_id])
+    @s3file = S3file.last
 
     bucket = @s3.bucket(@bucketname)
-  
-    object = bucket.object(s3file.key)
-    
+    object = bucket.object("assets#{@s3file.id.to_s}/#{filename}")
     object.upload_file(file_path, acl: 'public-read')
     
-    redirect_to s3file
+    file = s3file_params[:image]
+    filename = file.original_filename
+    file_path = "tmp/#{filename}"
+    File.binwrite(file_path, file.read)
+    
+    @s3file.update_attribute(:image, filename)
+    
+    object = bucket.object("assets#{@s3file.id.to_s}/#{filename}")
+    object.upload_file(file_path, acl: 'public-read')
+    
+    redirect_to @s3file
   end
   
   def index
@@ -49,6 +56,6 @@ class S3filesController < ApplicationController
   end
   
   def s3file_params
-    params.require(:s3file).permit(:key)
+    params.require(:s3file).permit(:key, :image, :channel_id)
   end
 end
