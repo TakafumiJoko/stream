@@ -9,7 +9,7 @@ class S3filesController < ApplicationController
   def create
     file = s3file_params[:key]
     
-    file_path = "tmp/s3/#{file.original_filename}"
+    file_path = "tmp/#{file.original_filename}"
     File.binwrite(file_path, file.read)
     
     s3file = S3file.new()
