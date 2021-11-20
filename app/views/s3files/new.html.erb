@@ -1,0 +1,5 @@
+<%= form_for @s3file do |f|%>
+    <%= f.label :key, '動画ファイル'%>
+    <%= f.file_field :key %>
+  <%= f.submit 'アップロード' %>
+<% end %>
