@@ -1,11 +1,11 @@
 class S3filesController < ApplicationController
   
-  skip_before_action :check_logged_in, only: [:index]
+  skip_before_action :check_logged_in
 
   def new
+    @s3file = S3file.new()
+    @categories = S3file.categories.to_a
     @channels = current_user.channels
-    channel = Channel.new()
-    @s3file = channel.s3files.build
   end
   
   def create
@@ -15,7 +15,7 @@ class S3filesController < ApplicationController
     file_path = "tmp/#{filename}"
     File.binwrite(file_path, file.read)
     
-    S3file.create(key: filename, channel_id: s3file_params[:channel_id])
+    S3file.create(key: filename, category: s3file_params[:category].to_i, channel_id: s3file_params[:channel_id])
     @s3file = S3file.last
 
     bucket = @s3.bucket(@bucketname)
@@ -50,12 +50,49 @@ class S3filesController < ApplicationController
     @s3 = get_s3_resource
   end
   
-  private
-  def get_s3_resource
-    Aws::S3::Resource.new(region: @region)
+  def home
+    @s3files = S3file.all
   end
   
-  def s3file_params
-    params.require(:s3file).permit(:key, :image, :channel_id)
+  def music
+    @s3files = S3file.where(category: "music")
   end
+  
+  def movie
+    @s3files = S3file.where(category: "movie")
+  end
+  
+  def program
+    @s3files = S3file.where(category: "program")
+  end
+  
+  def game
+    @s3files = S3file.where(category: "game")
+  end
+  
+  def news
+    @s3files = S3file.where(category: "news")
+  end
+  
+  def sports
+    @s3files = S3file.where(category: "sports")
+  end
+  
+  def learning
+    @s3files = S3file.where(category: "learning")
+  end
+  
+  private
+  
+    def get_s3_resource
+      Aws::S3::Resource.new(region: @region)
+    end
+    
+    def s3file_params
+      params.require(:s3file).permit(:key, :image, :category, :channel_id)
+    end
+    
+    def category_id_params
+      params.require(:category_id)
+    end
 end

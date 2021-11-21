@@ -1,11 +1,17 @@
 <%= form_with model: @s3file do |form|%>
     <%= form.label :key, '動画ファイル'%>
-    <%= form.file_field :key %>    
+    <%= form.file_field :key %><br>    
     <%= form.label :image, 'サムネイル'%>
-    <%= form.file_field :image %>
+    <%= form.file_field :image %><br>
+    <p>カテゴリー名を選択してください</p> 
+    <% @categories.each do |category| %>
+      <%= form.label :category, category[0], value: category[1] %>
+      <%= form.radio_button :category, "#{category[1]}" %><br>
+    <% end %>
+    <p>チャンネル名を選択してください</p>
     <% @channels.each do |channel| %>
       <%= form.label :channel_id, channel.name, value: channel.id %>
-      <%= form.radio_button :channel_id, "#{channel.id}" %>  
+      <%= form.radio_button :channel_id, "#{channel.id}" %><br>
     <% end %>
   <%= form.submit 'アップロード' %>
 <% end %>

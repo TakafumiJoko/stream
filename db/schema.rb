@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_20_063943) do
+ActiveRecord::Schema.define(version: 2021_11_21_090523) do
 
   create_table "channels", force: :cascade do |t|
     t.string "name"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2021_11_20_063943) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "channel_id"
     t.string "image"
+    t.integer "category"
     t.index ["channel_id"], name: "index_s3files_on_channel_id"
   end
 
