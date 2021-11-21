@@ -5,8 +5,8 @@
     <%= form.file_field :image %><br>
     <p>カテゴリー名を選択してください</p> 
     <% @categories.each do |category| %>
-      <%= form.label :category, category[0], value: category[1] %>
-      <%= form.radio_button :category, "#{category[1]}" %><br>
+      <%= form.label :category, category[0], value: category[0] %>
+      <%= form.radio_button :category, "#{category[0]}" %><br>
     <% end %>
     <p>チャンネル名を選択してください</p>
     <% @channels.each do |channel| %>

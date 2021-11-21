@@ -15,7 +15,7 @@ class S3filesController < ApplicationController
     file_path = "tmp/#{filename}"
     File.binwrite(file_path, file.read)
     
-    S3file.create(key: filename, category: s3file_params[:category].to_i, channel_id: s3file_params[:channel_id])
+    S3file.create(key: filename, category: s3file_params[:category], channel_id: s3file_params[:channel_id])
     @s3file = S3file.last
 
     bucket = @s3.bucket(@bucketname)
