@@ -8,7 +8,7 @@ module SessionsHelper
   def guest_log_in
     user = User.find_or_create_by!(email: 'guest@example.com') do |user|
       user.name = "ゲスト"
-      user.password = SecureRondom.urlsafe_base64
+      user.password = SecureRandom.urlsafe_base64
       channel = user.channels.build(name: user.name)
       channel.save
     end
