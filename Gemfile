@@ -34,11 +34,5 @@ group :production do
   gem 'pg', '1.1.4'
 end
 
-group :development, :production, :test do
-  gem 'omniauth-google-oauth2'
-  gem 'omniauth-rails_csrf_protection'
-  gem 'dotenv-rails'
-end
-
 # Windows ではタイムゾーン情報用の tzinfo-data gem を含める必要があります
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

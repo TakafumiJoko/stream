@@ -13,8 +13,5 @@ Rails.application.routes.draw do
   get 's3files/learning', to: 's3files#learning'
   resources :s3files
   resources :comments
-  get 'auth/:provider/callback', to: 'sessions#create'
-  get 'auth/failure', to: redirect('/')
-  get 'log_out', to: 'sessions#destroy', as: 'log_out'
-  resources :sessions, only: %i[create destroy]
+  resources :sessions, only: %i[create]
 end
