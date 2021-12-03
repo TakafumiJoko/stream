@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get 's3files/news', to: 's3files#news'
   get 's3files/sports', to: 's3files#sports'
   get 's3files/learning', to: 's3files#learning'
+  post 's3files/search', to: 's3files#search'
+  get 's3files/search_result', to: 's3files#search_result'
   resources :s3files
   resources :comments
   resources :sessions, only: %i[create]

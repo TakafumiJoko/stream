@@ -15,6 +15,7 @@
       <% else  %>
         <%= link_to "ゲストログイン(閲覧用)", sessions_path, method: :post %>
       <% end %>
+      <%= render 's3files/search_form' %>
     </header>
     <%= yield %>
   </body>

@@ -90,6 +90,19 @@ class S3filesController < ApplicationController
     @s3files = S3file.where(category: "learning")
   end
   
+  def search
+    if params[:key]
+      @s3files = S3file.where(key: params[:key])
+    else params[:category]
+      @s3files = S3file.where(key: params[:key])
+    end
+    render 'search_result'
+  end
+    
+  
+  def search_result
+  end
+  
   private
   
     def get_s3_resource
