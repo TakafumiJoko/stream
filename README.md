@@ -1,24 +1,15 @@
-# README
+#動画サイトstream
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+動画を投稿、視聴できるウェブサイトです。
 
-Things you may want to cover:
+## 特徴
+ホーム画面では最近見た、急上昇、再生回数ランキングの動画がまとめられています。
 
-* Ruby version
+動画投稿時にカテゴリを選択でき、カテゴリごとにページがあります。（例：音楽、映画、スポーツなど）
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## 環境
+Ubuntu Server LTS 18.04
+Ruby 2.6.3p62
+Rails 6.0.4.1
+heroku 7.59.1
+Postgresql 13.5
