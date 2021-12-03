@@ -1,0 +1,2 @@
+class BrowsingHistory < ApplicationRecord
+end

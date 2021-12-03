@@ -1,0 +1,8 @@
+<% s3files.each do |s3file| %>
+  <p>チャンネル名：<%= s3file.channel.name %></p>
+  <p>動画タイトル：<%= s3file.key %></p>
+  <% if s3file.view %>
+    <p>再生回数：<%= s3file.view.count %></p>
+  <% end %>
+  <%= link_to(image_tag("https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets#{s3file.id.to_s}/#{s3file.image}"), s3file) %>
+<% end %>
