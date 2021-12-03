@@ -41,6 +41,13 @@ class S3filesController < ApplicationController
 
   def show
     @s3file = S3file.find(params[:id])
+    @s3file.histories.create(user_id: current_user.id)
+    if view = OneDayView.find_by(s3file_id: @s3file.id)
+      count = view.count + 1
+      view.update_attribute(:count, count)
+    else
+      OneDayView.create(s3file_id: @s3file.id, count: 0)
+    end
   end
   
   def initialize
@@ -52,6 +59,7 @@ class S3filesController < ApplicationController
   
   def home
     @s3files = S3file.all
+    @trend = S3file.joins(:one_day_view).order(count: :desc).limit(10)
   end
   
   def music

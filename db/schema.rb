@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_22_064616) do
+ActiveRecord::Schema.define(version: 2021_11_24_095207) do
 
   create_table "channels", force: :cascade do |t|
     t.string "name"
@@ -26,6 +26,23 @@ ActiveRecord::Schema.define(version: 2021_11_22_064616) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "histories", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
+    t.integer "s3file_id", null: false
+    t.index ["s3file_id"], name: "index_histories_on_s3file_id"
+    t.index ["user_id"], name: "index_histories_on_user_id"
+  end
+
+  create_table "one_day_views", force: :cascade do |t|
+    t.integer "s3file_id", null: false
+    t.integer "count"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["s3file_id"], name: "index_one_day_views_on_s3file_id"
   end
 
   create_table "s3files", force: :cascade do |t|
@@ -47,5 +64,7 @@ ActiveRecord::Schema.define(version: 2021_11_22_064616) do
   end
 
   add_foreign_key "channels", "users"
+  add_foreign_key "histories", "s3files"
+  add_foreign_key "one_day_views", "s3files"
   add_foreign_key "s3files", "channels"
 end
