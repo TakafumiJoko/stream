@@ -1,6 +1,6 @@
 class S3filesController < ApplicationController
   
-  skip_before_action :check_logged_in
+  skip_before_action :check_logged_in, only: [:home]
 
   def new
     @s3file = S3file.new()
@@ -42,6 +42,7 @@ class S3filesController < ApplicationController
   def show
     @s3file = S3file.find(params[:id])
     @s3file.histories.create(user_id: current_user.id)
+    View.count_view(@s3file)
     if view = OneDayView.find_by(s3file_id: @s3file.id)
       count = view.count + 1
       view.update_attribute(:count, count)

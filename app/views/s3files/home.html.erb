@@ -27,12 +27,7 @@
     <%= link_to(image_tag("https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets#{trend.id.to_s}/#{trend.image}"), trend) %>
   <% end %>
 
-
 <% end %>
 
-<% @s3files.each do |s3file| %>
-  <p>チャンネル名：<%= s3file.channel.name %></p>
-  <p>動画タイトル：<%= s3file.key %></p>
-  <p>カテゴリー名：<%= s3file.category %></p>
-  <%= link_to(image_tag("https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets#{s3file.id.to_s}/#{s3file.image}"), s3file) %>
-<% end %>
+<h2>再生回数</h2>
+<%= render 'movie_thumbnails', s3files: @s3files %>
