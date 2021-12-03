@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_03_180941) do
+ActiveRecord::Schema.define(version: 2021_12_03_153621) do
 
   create_table "channels", force: :cascade do |t|
     t.string "name"
@@ -29,10 +29,10 @@ ActiveRecord::Schema.define(version: 2021_12_03_180941) do
   end
 
   create_table "histories", force: :cascade do |t|
+    t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "s3file_id", null: false
-    t.integer "user_id"
     t.index ["s3file_id"], name: "index_histories_on_s3file_id"
     t.index ["user_id"], name: "index_histories_on_user_id"
   end
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 2021_12_03_180941) do
 
   add_foreign_key "channels", "users"
   add_foreign_key "histories", "s3files"
+  add_foreign_key "histories", "users"
   add_foreign_key "one_day_views", "s3files"
   add_foreign_key "s3files", "channels"
 end
