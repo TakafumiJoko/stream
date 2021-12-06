@@ -11,7 +11,11 @@
 
 ## 環境
 Ubuntu Server LTS 18.04
+
 Ruby 2.6.3p62
+
 Rails 6.0.4.1
+
 heroku 7.59.1
+
 Postgresql 13.5
