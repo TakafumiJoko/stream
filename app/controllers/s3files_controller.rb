@@ -105,12 +105,16 @@ class S3filesController < ApplicationController
   def search_result
   end
 
-  def create_good_or_bad
+  def change_good_or_bad
     s3file = S3file.find_by(id: params[:id])
     if good_or_bad = GoodOrBad.find_by(user_id: current_user.id, s3file_id: s3file.id)
-      good_or_bad.update(evaluation_type: good_or_bad_params[:evaluation_type])
+      if good_or_bad.evaluation_type == good_or_bad_params[:evaluation_type].to_i
+        good_or_bad.destroy
+      else
+        good_or_bad.update(evaluation_type: good_or_bad_params[:evaluation_type])
+      end
     else
-      good_or_bad.create(evaluation_type: good_or_bad_params[:evaluation_type])
+      GoodOrBad.create(user_id: current_user.id, s3file_id: s3file.id, evaluation_type: good_or_bad_params[:evaluation_type])
     end
     redirect_to s3file
   end
