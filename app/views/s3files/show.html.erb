@@ -2,8 +2,15 @@
 <h2>カテゴリー名：<%= @s3file.category %></h2>
 <h2>再生回数：<%= @s3file.view.count %></h2>
 <video src="https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets<%= @s3file.id.to_s %>/<%= @s3file.key %>" 
-poster="https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets<%= @s3file.id.to_s %>/<%= @s3file.image %>" 
+s3fileer="https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets<%= @s3file.id.to_s %>/<%= @s3file.image %>" 
 style="width: 1000px; height: 500px;"
 controls></video>
-<%= button_to("Good #{@good_count}", controller: "s3files", action: "change_good_or_bad", method: :post, params: {good_or_bad: {evaluation_type: 0}}) %>
-<%= button_to("Bad #{@bad_count}", controller: "s3files", action: "change_good_or_bad", method: :post, params: {good_or_bad: {evaluation_type: 1}}) %>
+<%= button_to("Good #{@good_count}", controller: "s3files", action: "change_good_or_bad", method: :s3file, params: {good_or_bad: {evaluation_type: 0}}) %>
+<%= button_to("Bad #{@bad_count}", controller: "s3files", action: "change_good_or_bad", method: :s3file, params: {good_or_bad: {evaluation_type: 1}}) %>
+<h2>コメント</h2>
+<div class="new-comment">
+  <%= render 'comments/form', s3file: @s3file, comment: @comment %>
+</div>
+<div class="comments">
+  <%= render 'comments/s3file_comments', s3file: @s3file %>
+</div>

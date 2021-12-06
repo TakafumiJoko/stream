@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_05_125140) do
+ActiveRecord::Schema.define(version: 2021_12_06_051636) do
 
   create_table "channels", force: :cascade do |t|
     t.string "name"
@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(version: 2021_12_05_125140) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
+    t.integer "s3file_id"
+    t.index ["s3file_id"], name: "index_comments_on_s3file_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 

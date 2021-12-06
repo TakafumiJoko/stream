@@ -41,15 +41,11 @@ class S3filesController < ApplicationController
 
   def show
     @s3file = S3file.find(params[:id])
+    @comment = Comment.new
     @s3file.histories.create(user_id: current_user.id)
-    View.count_view(@s3file)
-    if view = OneDayView.find_by(s3file_id: @s3file.id)
-      count = view.count + 1
-      view.update_attribute(:count, count)
-    else
-      OneDayView.create(s3file_id: @s3file.id, count: 0)
-    end
-    count_good_or_bad
+    View.count(@s3file)
+    OneDayView.count(@s3file)
+    GoodOrBad.count(@s3file)
   end
   
   def initialize
@@ -120,19 +116,7 @@ class S3filesController < ApplicationController
   end
 
   private
-    def count_good_or_bad
-      @good_count = 0
-      good = GoodOrBad.where(s3file_id: @s3file.id).where(evaluation_type: 0)
-      good.each do
-        @good_count += 1
-      end
-      @bad_count = 0
-      bad = GoodOrBad.where(s3file_id: @s3file.id).where(evaluation_type: 1)
-      bad.each do
-        @bad_count += 1
-      end
-    end
-
+  
     def get_s3_resource
       Aws::S3::Resource.new(region: @region)
     end

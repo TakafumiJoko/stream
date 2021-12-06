@@ -14,7 +14,8 @@ Rails.application.routes.draw do
   post 's3files/search', to: 's3files#search'
   get 's3files/search_result', to: 's3files#search_result'
   post 's3files/:id/change_good_or_bad', to: 's3files#change_good_or_bad'
-  resources :s3files
-  resources :comments
+  resources :s3files do
+    resources :comments, only: [:create, :update, :destroy]
+  end
   resources :sessions, only: %i[create]
 end
