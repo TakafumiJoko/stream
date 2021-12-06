@@ -4,6 +4,7 @@ class CreateComments < ActiveRecord::Migration[6.0]
       t.text :comment
       t.references :user
       t.references :s3file
+      t.timestamps
     end
   end
 end
