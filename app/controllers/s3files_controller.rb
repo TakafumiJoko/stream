@@ -49,6 +49,7 @@ class S3filesController < ApplicationController
     else
       OneDayView.create(s3file_id: @s3file.id, count: 0)
     end
+    count_good_or_bad
   end
   
   def initialize
@@ -103,9 +104,31 @@ class S3filesController < ApplicationController
   
   def search_result
   end
-  
+
+  def create_good_or_bad
+    s3file = S3file.find_by(id: params[:id])
+    if good_or_bad = GoodOrBad.find_by(user_id: current_user.id, s3file_id: s3file.id)
+      good_or_bad.update(evaluation_type: good_or_bad_params[:evaluation_type])
+    else
+      good_or_bad.create(evaluation_type: good_or_bad_params[:evaluation_type])
+    end
+    redirect_to s3file
+  end
+
   private
-  
+    def count_good_or_bad
+      @good_count = 0
+      good = GoodOrBad.where(s3file_id: @s3file.id).where(evaluation_type: 0)
+      good.each do
+        @good_count += 1
+      end
+      @bad_count = 0
+      bad = GoodOrBad.where(s3file_id: @s3file.id).where(evaluation_type: 1)
+      bad.each do
+        @bad_count += 1
+      end
+    end
+
     def get_s3_resource
       Aws::S3::Resource.new(region: @region)
     end
@@ -116,5 +139,9 @@ class S3filesController < ApplicationController
     
     def category_id_params
       params.require(:category_id)
+    end
+    
+    def good_or_bad_params
+      params.require(:good_or_bad).permit(:evaluation_type)
     end
 end

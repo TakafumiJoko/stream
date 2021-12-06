@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_03_153621) do
+ActiveRecord::Schema.define(version: 2021_12_05_125140) do
 
   create_table "channels", force: :cascade do |t|
     t.string "name"
@@ -26,6 +26,16 @@ ActiveRecord::Schema.define(version: 2021_12_03_153621) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "good_or_bads", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "s3file_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "evaluation_type"
+    t.index ["s3file_id"], name: "index_good_or_bads_on_s3file_id"
+    t.index ["user_id"], name: "index_good_or_bads_on_user_id"
   end
 
   create_table "histories", force: :cascade do |t|
