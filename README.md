@@ -2,7 +2,7 @@
 
 ## 概要
 
-[](https://github.com/TakafumiJoko/stream/blob/master/app/assets/images/README%E7%94%BB%E5%83%8F.png)
+![](https://github.com/TakafumiJoko/stream/blob/master/app/assets/images/README%E7%94%BB%E5%83%8F.png)
 
 動画を投稿、視聴できるウェブサイトです。
 
