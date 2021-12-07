@@ -13,8 +13,9 @@
       <% if current_user %>
         <%= link_to(current_user.name, current_user) %>
       <% else  %>
-        <%= link_to "ゲストログイン(閲覧用)", sessions_path, method: :post %>
+        <%= link_to "ゲストログイン(閲覧用)", sessions_path, method: :post %><br>
       <% end %>
+      <%= render 'layouts/links' %>
       <%= render 's3files/search_form' %>
     </header>
     <main>
