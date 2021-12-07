@@ -23,11 +23,13 @@ Ruby 2.6.3p62
 Rails 6.0.4.1
 
 開発環境
+
 EC2
 
 MySQL 5.7.36-0ubuntu0.18.04.1
 
 本番環境
+
 heroku 7.59.1
 
 Postgresql 13.5
