@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  def create
+    def create
     @s3file = S3file.find(params[:s3file_id])
     @comment = @s3file.comments.build(comment_params)
     @comment.user_id = current_user.id

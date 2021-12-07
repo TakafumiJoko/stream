@@ -6,11 +6,16 @@ module SessionsHelper
   end
   
   def guest_log_in
-    user = User.find_or_create_by!(email: 'guest@example.com') do |user|
-      user.name = "ゲスト"
-      user.password = SecureRandom.urlsafe_base64
-      channel = user.channels.build(name: user.name)
-      channel.save
+    if session[:user_id]
+      user = User.find_by(id: session[:user_id]) 
+    else
+      user = User.create do |user|
+        user.name = "ゲスト#{user.id}"
+        user.email = "guest#{user.id}@example.com"
+        user.password = SecureRandom.urlsafe_base64
+        channel = user.channels.build(name: user.name)
+        channel.save
+      end
     end
     log_in user
   end
