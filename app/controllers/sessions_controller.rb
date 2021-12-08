@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
   skip_before_action :check_logged_in, only: :create
   
   def create
-    log_in
+    guest_log_in
     redirect_to root_path
   end
    

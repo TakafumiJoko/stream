@@ -4,8 +4,8 @@ module SessionsHelper
 
     @current_user ||= User.find_by(id: user_id)
   end
- 
-  def log_in
+  
+  def guest_log_in
     if session[:user_id]
       @user = User.find_by(id: session[:user_id]) 
     else
@@ -18,7 +18,11 @@ module SessionsHelper
       channel = @user.channels.build(name: @user.name)
       channel.save
     end
-    session[:user_id] = @user.id
+    log_in @user
+  end
+  
+  def log_in(user)
+    session[:user_id] = 1
   end
 
   def log_out
