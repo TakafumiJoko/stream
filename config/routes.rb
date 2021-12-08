@@ -17,5 +17,5 @@ Rails.application.routes.draw do
   resources :s3files do
     resources :comments, only: [:create, :update, :destroy]
   end
-  resources :sessions, only: %i[create]
+  resources :sessions, only: [:create, :destroy]
 end

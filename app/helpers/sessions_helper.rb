@@ -6,26 +6,27 @@ module SessionsHelper
   end
   
   def guest_log_in
-    if session[:user_id]
-      user = User.find_by(id: session[:user_id]) 
+    if cookies[:user_id]
+      user = User.find_by(id: cookies[:user_id]) 
     else
-      user = User.create do |user|
-        user.name = "ゲスト#{user.id}"
-        user.email = "guest#{user.id}@example.com"
-        user.password = SecureRandom.urlsafe_base64
-        channel = user.channels.build(name: user.name)
-        channel.save
-      end
+      user = User.create
+      user.update_attributes(
+        name: "ゲスト#{user.id}",
+        email: "guest#{user.id}@example.com",
+        password: SecureRandom.urlsafe_base64
+      )
+      channel = user.channels.build(name: user.name)
+      channel.save
     end
     log_in user
   end
   
   def log_in(user)
-    session[:user_id] = user.id
+    cookies[:user_id] = user.id
   end
 
   def log_out
-    session.delete(:user_id)
+    cookies.delete(:user_id)
     @current_user = nil
   end
 end
