@@ -22,11 +22,11 @@ module SessionsHelper
   end
   
   def log_in(user)
-    cookies[:user_id] = user.id
+    cookies.permanent.signed[:user_id] = user.id
   end
 
   def log_out
-    cookies.delete(:user_id)
+    cookies.delete :user_id
     @current_user = nil
   end
 end
