@@ -19,7 +19,6 @@ module SessionsHelper
       channel.save
     end
     session[:user_id] = @user.id
-    binding.pry
   end
 
   def log_out
