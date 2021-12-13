@@ -1,5 +1,5 @@
 <h2>検索フォーム</h2>
-<%= form_with(model: S3file.new, url: '/s3files/search', local: true) do |form| %>
+<%= form_with(model: Video.new, url: '/videos/search', local: true) do |form| %>
   <%= form.label :key %> 
   <%= form.text_field :key %>
   <%= form.label :category %> 

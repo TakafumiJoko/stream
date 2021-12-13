@@ -1,20 +1,20 @@
 Rails.application.routes.draw do
-  root 's3files#home'
+  root 'videos#home'
   resources :users do
     resources :channels
   end
-  get 's3files/home', to: 's3files#home'
-  get 's3files/music', to: 's3files#music'
-  get 's3files/movie', to: 's3files#movie'
-  get 's3files/program', to: 's3files#program'
-  get 's3files/game', to: 's3files#game'
-  get 's3files/news', to: 's3files#news'
-  get 's3files/sports', to: 's3files#sports'
-  get 's3files/learning', to: 's3files#learning'
-  post 's3files/search', to: 's3files#search'
-  get 's3files/search_result', to: 's3files#search_result'
-  post 's3files/:id/change_good_or_bad', to: 's3files#change_good_or_bad'
-  resources :s3files do
+  get 'videos/home', to: 'videos#home'
+  get 'videos/music', to: 'videos#music'
+  get 'videos/movie', to: 'videos#movie'
+  get 'videos/program', to: 'videos#program'
+  get 'videos/game', to: 'videos#game'
+  get 'videos/news', to: 'videos#news'
+  get 'videos/sports', to: 'videos#sports'
+  get 'videos/learning', to: 'videos#learning'
+  post 'videos/search', to: 'videos#search'
+  get 'videos/search_result', to: 'videos#search_result'
+  post 'videos/:id/change_good_or_bad', to: 'videos#change_good_or_bad'
+  resources :videos do
     resources :comments, only: [:create, :update, :destroy]
   end
   resources :sessions, only: [:create, :destroy]

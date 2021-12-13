@@ -1,4 +1,4 @@
-class S3file < ApplicationRecord
+class Video < ApplicationRecord
   belongs_to :channel
   has_many :comments, dependent: :destroy
   has_many :histories
