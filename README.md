@@ -22,9 +22,11 @@ Ruby 2.6.3p62
 
 Rails 6.0.4.1
 
+AmazonS3
+
 開発環境
 
-EC2
+Amazon EC2
 
 MySQL 5.7.36-0ubuntu0.18.04.1
 
