@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_13_184859) do
+ActiveRecord::Schema.define(version: 2021_12_20_062844) do
 
   create_table "channels", force: :cascade do |t|
     t.string "name"
@@ -65,15 +65,8 @@ ActiveRecord::Schema.define(version: 2021_12_13_184859) do
     t.string "password"
   end
 
-  create_table "videos", force: :cascade do |t|
-    t.string "key"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "channel_id"
-    t.string "image"
-    t.integer "category"
-    t.index ["channel_id"], name: "index_videos_on_channel_id"
-  end
+# Could not dump table "videos" because of following StandardError
+#   Unknown type '' for column 'key'
 
   create_table "views", force: :cascade do |t|
     t.integer "count"

@@ -1,9 +1,9 @@
 <% @user.channels.each do |channel| %>
   チャンネル名：<%= channel.name %><br>
   <% channel.s3files.each do |s3file| %>
-    動画タイトル：<%= s3file.key %><br>
+    動画タイトル：<%= s3file.title %><br>
     カテゴリー名：<%= s3file.category %><br>
-    <%= link_to(image_tag("https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets#{s3file.id.to_s}/#{s3file.image}"), s3file) %>
+    <%= link_to(image_tag("https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets#{s3file.id.to_s}/#{s3file.thumbnail}"), s3file) %>
   <% end %>
 <% end %>
 

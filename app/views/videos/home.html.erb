@@ -14,17 +14,17 @@
   <% @history = current_user.histories.order(created_at: :desc).limit(10) %>
   <% @history.each do |history| %>
     <p>チャンネル名：<%= history.video.channel.name %></p>
-    <p>動画タイトル：<%= history.video.key %></p>
+    <p>動画タイトル：<%= history.video.title %></p>
     <p>カテゴリー名：<%= history.video.category %></p>
-    <%= link_to(image_tag("https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets#{history.video.id.to_s}/#{history.video.image}"), history.video) %>
+    <%= link_to(image_tag("https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets#{history.video.id.to_s}/#{history.video.thumbnail}"), history.video) %>
   <% end %>
   
   <h2>急上昇</h2>
   <% @trend.each do |trend| %>
     <p>チャンネル名：<%= trend.channel.name %></p>
-    <p>動画タイトル：<%= trend.key %></p>
+    <p>動画タイトル：<%= trend.title %></p>
     <p>カテゴリー名：<%= trend.category %></p>
-    <%= link_to(image_tag("https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets#{trend.id.to_s}/#{trend.image}"), trend) %>
+    <%= link_to(image_tag("https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets#{trend.id.to_s}/#{trend.thumbnail}"), trend) %>
   <% end %>
 
 <% end %>

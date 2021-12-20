@@ -1,8 +1,8 @@
 <%= form_with model: @video do |form|%>
-    <%= form.label :key, '動画ファイル'%>
-    <%= form.file_field :key %><br>    
-    <%= form.label :image, 'サムネイル'%>
-    <%= form.file_field :image %><br>
+    <%= form.label :title, '動画ファイル'%>
+    <%= form.file_field :title %><br>    
+    <%= form.label :thumbnail, 'サムネイル'%>
+    <%= form.file_field :thumbnail %><br>
     <p>カテゴリー名を選択してください</p> 
     <% @categories.each do |category| %>
       <%= form.label :category, category[0], value: category[0] %>

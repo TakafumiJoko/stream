@@ -10,24 +10,24 @@ class VideosController < ApplicationController
   
   def create
     
-    file = video_params[:key]
+    file = video_params[:title]
     filename = file.original_filename
     file_path = "tmp/#{filename}"
     File.binwrite(file_path, file.read)
     
-    Video.create(key: filename, category: video_params[:category], channel_id: video_params[:channel_id])
+    Video.create(title: filename, category: video_params[:category], channel_id: video_params[:channel_id])
     @video = Video.last
 
     bucket = @s3.bucket(@bucketname)
     object = bucket.object("assets#{@video.id.to_s}/#{filename}")
     object.upload_file(file_path, acl: 'public-read')
     
-    file = video_params[:image]
+    file = video_params[:thumbnail]
     filename = file.original_filename
     file_path = "tmp/#{filename}"
     File.binwrite(file_path, file.read)
     
-    @video.update_attribute(:image, filename)
+    @video.update_attribute(:thumbnail, filename)
     
     object = bucket.object("assets#{@video.id.to_s}/#{filename}")
     object.upload_file(file_path, acl: 'public-read')
@@ -89,10 +89,10 @@ class VideosController < ApplicationController
   end
   
   def search
-    if params[:key]
-      @videos = Video.where(key: params[:key])
+    if params[:title]
+      @videos = Video.where(title: params[:title])
     else params[:category]
-      @videos = Video.where(key: params[:key])
+      @videos = Video.where(title: params[:title])
     end
     render 'search_result'
   end
@@ -122,7 +122,7 @@ class VideosController < ApplicationController
     end
     
     def video_params
-      params.require(:video).permit(:key, :image, :category, :channel_id)
+      params.require(:video).permit(:title, :thumbnail, :category, :channel_id)
     end
     
     def category_id_params
