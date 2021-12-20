@@ -5,9 +5,7 @@ module SessionsHelper
   end
   
   def guest_log_in
-    if session[:user_id]
-      @user = User.find_by(id: session[:user_id]) 
-    else
+    unless @user = User.find_by(id: session[:user_id]) 
       @user = User.create
       @user.update(
         name: "ゲスト#{@user.id}",
