@@ -9,29 +9,10 @@ class VideosController < ApplicationController
   end
   
   def create
-    
-    file = video_params[:title]
-    filename = file.original_filename
-    file_path = "tmp/#{filename}"
-    File.binwrite(file_path, file.read)
-    
-    Video.create(title: filename, category: video_params[:category], channel_id: video_params[:channel_id])
-    @video = Video.last
-
-    bucket = @s3.bucket(@bucketname)
-    object = bucket.object("assets#{@video.id.to_s}/#{filename}")
-    object.upload_file(file_path, acl: 'public-read')
-    
-    file = video_params[:thumbnail]
-    filename = file.original_filename
-    file_path = "tmp/#{filename}"
-    File.binwrite(file_path, file.read)
-    
-    @video.update_attribute(:thumbnail, filename)
-    
-    object = bucket.object("assets#{@video.id.to_s}/#{filename}")
-    object.upload_file(file_path, acl: 'public-read')
-    
+    files = [video_params[:title], video_params[:thumbnail]]
+    create_localfile(files)
+    @video = create_video
+    upload_s3file(files, @video)
     redirect_to @video
   end
   
@@ -46,13 +27,6 @@ class VideosController < ApplicationController
     View.count(@video)
     OneDayView.count(@video)
     GoodOrBad.count(@video)
-  end
-  
-  def initialize
-    super
-    @region = 'ap-northeast-1'
-    @bucketname = 'bucket-for-stream'
-    @s3 = get_s3_resource
   end
   
   def home
@@ -117,8 +91,45 @@ class VideosController < ApplicationController
 
   private
   
+    def initialize
+      super
+      @region = 'ap-northeast-1'
+      @bucketname = 'bucket-for-stream'
+      @s3 = get_s3_resource
+    end
+    
     def get_s3_resource
       Aws::S3::Resource.new(region: @region)
+    end
+    
+    def get_filename(file)
+      file.original_filename
+    end
+    
+    def get_filepath(filename)
+      "tmp/#{filename}"
+    end
+    
+    def create_localfile(files)
+      files.each do |file|
+        filename = get_filename(file)
+        filepath = get_filepath(filename)
+        File.binwrite(filepath, file.read)
+      end
+    end
+    
+    def create_video
+      Video.create(title: get_filename(video_params[:title]), thumbnail: get_filename(video_params[:thumbnail]), category: video_params[:category], channel_id: video_params[:channel_id])
+    end
+    
+    def upload_s3file(files, video)
+      bucket = @s3.bucket(@bucketname)
+      files.each do |file|
+        filename = get_filename(file)
+        filepath = get_filepath(filename)
+        object = bucket.object("assets#{video.id}/#{filename}")
+        object.upload_file(filepath, acl: 'public-read')  
+      end     
     end
     
     def video_params
