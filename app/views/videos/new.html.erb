@@ -1,0 +1,22 @@
+<%= form_with model: @video do |form|%>
+  <%= form.label :title, '動画ファイル'%>
+  <%= form.file_field :title %><br>    
+  <%= form.label :thumbnail, 'サムネイル'%>
+  <%= form.file_field :thumbnail %><br>
+  <p>カテゴリー名を選択してください</p> 
+  <% @categories.each do |category| %>
+    <%= form.label :category, category[0], value: category[0] %>
+    <%= form.radio_button :category, "#{category[0]}" %><br>
+  <% end %>
+  <p>タグを作成してください</p> 
+  <p>スペースを入力することで複数のタグを付けることができます。</p>
+  <p>"例：音楽 文芸 スポーツ"</p>
+  <%= form.label :tag_name, 'タグ' %>
+  <%= form.text_field :tag_name %>
+  <p>チャンネル名を選択してください</p>
+  <% @channels.each do |channel| %>
+    <%= form.label :channel_id, channel.name, value: channel.id %>
+    <%= form.radio_button :channel_id, "#{channel.id}" %><br>
+  <% end %>
+  <%= form.submit 'アップロード' %>
+<% end %>

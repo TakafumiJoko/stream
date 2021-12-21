@@ -1,6 +1,6 @@
 class Comment < ApplicationRecord
   belongs_to :user
-  belongs_to :s3file
+  belongs_to :video
   
   validates :comment, presence: true
 end
