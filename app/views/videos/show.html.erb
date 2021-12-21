@@ -14,3 +14,5 @@ controls></video>
 <div class="comments">
   <%= render 'comments/video_comments', video: @video %>
 </div>
+<h2>関連動画</h2>
+<%= render 'movie_thumbnails', videos: @related_videos %>

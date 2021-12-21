@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_20_062844) do
+ActiveRecord::Schema.define(version: 2021_12_21_131739) do
 
   create_table "channels", force: :cascade do |t|
     t.string "name"
@@ -57,12 +57,29 @@ ActiveRecord::Schema.define(version: 2021_12_20_062844) do
     t.index ["video_id"], name: "index_one_day_views_on_video_id"
   end
 
+  create_table "tags", force: :cascade do |t|
+    t.string "tag_name"
+    t.integer "video_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["video_id"], name: "index_tags_on_video_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "password"
+  end
+
+  create_table "video_tags", force: :cascade do |t|
+    t.integer "video_id", null: false
+    t.integer "tag_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["tag_id"], name: "index_video_tags_on_tag_id"
+    t.index ["video_id"], name: "index_video_tags_on_video_id"
   end
 
   create_table "videos", force: :cascade do |t|
@@ -86,5 +103,8 @@ ActiveRecord::Schema.define(version: 2021_12_20_062844) do
   add_foreign_key "histories", "users"
   add_foreign_key "histories", "videos"
   add_foreign_key "one_day_views", "videos"
+  add_foreign_key "tags", "videos"
+  add_foreign_key "video_tags", "tags"
+  add_foreign_key "video_tags", "videos"
   add_foreign_key "videos", "channels"
 end

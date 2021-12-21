@@ -12,6 +12,8 @@ class VideosController < ApplicationController
     files = [video_params[:title], video_params[:thumbnail]]
     create_localfile(files)
     @video = create_video
+    tag_list = video_params[:tag_name].split(nil)
+    @video.save_tag(tag_list)
     upload_s3file(files, @video)
     redirect_to @video
   end
@@ -22,7 +24,9 @@ class VideosController < ApplicationController
 
   def show
     @video = Video.find(params[:id])
+    @videos = []
     @comment = Comment.new
+    reccomend(@related_videos)
     @video.histories.create(user_id: current_user.id)
     View.count(@video)
     OneDayView.count(@video)
@@ -119,7 +123,10 @@ class VideosController < ApplicationController
     end
     
     def create_video
-      Video.create(title: get_filename(video_params[:title]), thumbnail: get_filename(video_params[:thumbnail]), category: video_params[:category], channel_id: video_params[:channel_id])
+      Video.create(title: get_filename(video_params[:title]), 
+                   thumbnail: get_filename(video_params[:thumbnail]), 
+                   category: video_params[:category], 
+                   channel_id: video_params[:channel_id])
     end
     
     def upload_s3file(files, video)
@@ -132,8 +139,23 @@ class VideosController < ApplicationController
       end     
     end
     
+    def reccomend(related_videos)
+      @video.tags.each do |tag|
+        if related_videos.count < 20
+          tag.videos.each_with_index do |video, num|
+            if num == 5
+              break
+            end
+            unless video.id == @video.id || related_videos.include?(video)
+              related_videos.push(Video.find_by(id: video.id))
+            end
+          end
+        end
+      end
+    end
+    
     def video_params
-      params.require(:video).permit(:title, :thumbnail, :category, :channel_id)
+      params.require(:video).permit(:title, :thumbnail, :category, :tag_name, :channel_id)
     end
     
     def category_id_params
