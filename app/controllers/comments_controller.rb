@@ -16,7 +16,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    Comment.find_by(id: params[:id], video_id: params[:video_id]).destroy
+    current_user.comments.find_by(id: params[:id], video_id: params[:video_id]).destroy
     flash.now[:alert] = '投稿を削除しました'
     @video = video.find(params[:video_id])  
     render :video_comments  
