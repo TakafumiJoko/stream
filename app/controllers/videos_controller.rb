@@ -2,6 +2,8 @@ class VideosController < ApplicationController
   
   skip_before_action :check_logged_in, only: [:home]
 
+  VIDEO_SHOWABLE_MAX_COUNT = 20
+
   def new
     @video = Video.new()
     @categories = Video.categories.to_a
@@ -24,8 +26,8 @@ class VideosController < ApplicationController
 
   def show
     @video = Video.find(params[:id])
-    @videos = []
     @comment = Comment.new
+    @related_videos = []
     reccomend(@related_videos)
     @video.histories.create(user_id: current_user.id)
     View.count(@video)
@@ -141,7 +143,7 @@ class VideosController < ApplicationController
     
     def reccomend(related_videos)
       @video.tags.each do |tag|
-        if related_videos.count < 20
+        if tag.videos.count < VIDEO_SHOWABLE_MAX_COUNT
           tag.videos.each_with_index do |video, num|
             if num == 5
               break
