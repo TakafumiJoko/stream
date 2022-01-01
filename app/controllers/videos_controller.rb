@@ -69,11 +69,7 @@ class VideosController < ApplicationController
   end
   
   def search
-    if params[:title]
-      @videos = Video.where(title: params[:title])
-    else params[:category]
-      @videos = Video.where(title: params[:title])
-    end
+    @videos = Video.where(title: params[:title])
     render 'search_result'
   end
     
@@ -157,7 +153,7 @@ class VideosController < ApplicationController
     end
     
     def video_params
-      params.require(:video).permit(:title, :thumbnail, :category, :tag_name, :channel_id)
+      params.require(:video).permit(:title, :thumbnail, :tag_name, :channel_id)
     end
     
     def category_id_params
