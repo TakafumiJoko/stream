@@ -28,7 +28,7 @@ class VideosController < ApplicationController
     @video = Video.find(params[:id])
     @comment = Comment.new
     @related_videos = []
-    reccomend(@related_videos)
+    recommend(@related_videos)
     @video.histories.create(user_id: current_user.id)
     View.count(@video)
     OneDayView.count(@video)
@@ -141,7 +141,7 @@ class VideosController < ApplicationController
       end     
     end
     
-    def reccomend(related_videos)
+    def recommend(related_videos)
       @video.tags.each do |tag|
         if tag.videos.count < VIDEO_SHOWABLE_MAX_COUNT
           tag.videos.each_with_index do |video, num|
