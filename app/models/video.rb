@@ -9,6 +9,10 @@ class Video < ApplicationRecord
   has_many :tags, through: :video_tags
   enum category: [:music, :movie, :program, :game, :news, :sports, :learning]
   
+  validates :thumbnail, presence: true
+  validates :category, presence: true
+  validates :channel_id, presence: true
+  
   def save_tag(sent_tags)
     current_tags = self.tags.pluck(:tag_name) unless self.tags.nil?
     old_tags = current_tags - sent_tags
