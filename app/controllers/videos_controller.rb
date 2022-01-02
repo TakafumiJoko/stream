@@ -40,32 +40,9 @@ class VideosController < ApplicationController
     @trend = Video.joins(:one_day_view).order(count: :desc).limit(10)
   end
   
-  def music
-    @videos = Video.where(category: "music")
-  end
-  
-  def movie
-    @videos = Video.where(category: "movie")
-  end
-  
-  def program
-    @videos = Video.where(category: "program")
-  end
-  
-  def game
-    @videos = Video.where(category: "game")
-  end
-  
-  def news
-    @videos = Video.where(category: "news")
-  end
-  
-  def sports
-    @videos = Video.where(category: "sports")
-  end
-  
-  def learning
-    @videos = Video.where(category: "learning")
+  def category
+    @video = Video.find_by(category: params[:category])
+    @videos = Video.where(category: params[:category])
   end
   
   def search
@@ -153,13 +130,9 @@ class VideosController < ApplicationController
     end
     
     def video_params
-      params.require(:video).permit(:title, :thumbnail, :tag_name, :channel_id)
+      params.require(:video).permit(:title, :thumbnail, :category, :tag_name, :channel_id)
     end
-    
-    def category_id_params
-      params.require(:category_id)
-    end
-    
+
     def good_or_bad_params
       params.require(:good_or_bad).permit(:evaluation_type)
     end
