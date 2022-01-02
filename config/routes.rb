@@ -4,13 +4,7 @@ Rails.application.routes.draw do
     resources :channels
   end
   get 'videos/home', to: 'videos#home'
-  get 'videos/music', to: 'videos#music'
-  get 'videos/movie', to: 'videos#movie'
-  get 'videos/program', to: 'videos#program'
-  get 'videos/game', to: 'videos#game'
-  get 'videos/news', to: 'videos#news'
-  get 'videos/sports', to: 'videos#sports'
-  get 'videos/learning', to: 'videos#learning'
+  get 'videos/category', to: 'videos#category'
   post 'videos/search', to: 'videos#search'
   get 'videos/search_result', to: 'videos#search_result'
   post 'videos/:id/change_good_or_bad', to: 'videos#change_good_or_bad'
