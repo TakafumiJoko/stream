@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_21_131739) do
+ActiveRecord::Schema.define(version: 2022_01_02_130935) do
 
   create_table "channels", force: :cascade do |t|
     t.string "name"
@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(version: 2021_12_21_131739) do
   end
 
   create_table "views", force: :cascade do |t|
-    t.integer "count"
+    t.integer "count", default: 0
     t.integer "video_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
