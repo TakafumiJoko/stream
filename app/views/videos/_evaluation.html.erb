@@ -1,0 +1,19 @@
+<% if GoodOrBad.find_by(user_id: current_user.id, video_id: video.id, evaluation: "good") %>
+  <%= link_to(videos_change_good_or_bad_path(video.id, params: {good_or_bad: {evaluation: "good"}}), method: "post") do %>
+    <p>Good<span style="color:red;"><%= @good_count %></span></p>
+  <% end %>
+<% else %>
+  <%= link_to(videos_change_good_or_bad_path(video.id, params: {good_or_bad: {evaluation: "good"}}), method: "post") do %>
+    <p>Good<%= @good_count %></p>
+  <% end %>
+<% end %>
+<% if GoodOrBad.find_by(user_id: current_user.id, video_id: video.id, evaluation: "bad") %>
+  <%= link_to(videos_change_good_or_bad_path(video.id, params: {good_or_bad: {evaluation: "bad"}}), method: "post") do %>
+    <p>Bad<span style="color:red;"><%= @bad_count %></span></p>
+  <% end %>
+<% else %>
+  <%= link_to(videos_change_good_or_bad_path(video.id, params: {good_or_bad: {evaluation: "bad"}}), method: "post") do %>
+    <p>Bad<%= @bad_count %></p>
+  <% end %>
+<% end %>
+

@@ -28,11 +28,11 @@ class VideosController < ApplicationController
     @video = Video.find(params[:id])
     @comment = Comment.new
     @related_videos = []
-    reccomend(@related_videos)
+    recommend(@related_videos)
     @video.histories.create(user_id: current_user.id)
     View.count(@video)
     OneDayView.count(@video)
-    GoodOrBad.count(@video)
+    count_good_or_bad(@video)
   end
   
   def home
@@ -40,59 +40,28 @@ class VideosController < ApplicationController
     @trend = Video.joins(:one_day_view).order(count: :desc).limit(10)
   end
   
-  def music
-    @videos = Video.where(category: "music")
-  end
-  
-  def movie
-    @videos = Video.where(category: "movie")
-  end
-  
-  def program
-    @videos = Video.where(category: "program")
-  end
-  
-  def game
-    @videos = Video.where(category: "game")
-  end
-  
-  def news
-    @videos = Video.where(category: "news")
-  end
-  
-  def sports
-    @videos = Video.where(category: "sports")
-  end
-  
-  def learning
-    @videos = Video.where(category: "learning")
+  def category
+    @video = Video.find_by(category: params[:category])
+    @videos = Video.where(category: params[:category])
   end
   
   def search
-    if params[:title]
-      @videos = Video.where(title: params[:title])
-    else params[:category]
-      @videos = Video.where(title: params[:title])
-    end
+    @videos = Video.where(title: params[:title])
     render 'search_result'
   end
     
   
   def search_result
   end
-
+  
   def change_good_or_bad
-    video = Video.find_by(id: params[:id])
-    if good_or_bad = GoodOrBad.find_by(user_id: current_user.id, video_id: video.id)
-      if good_or_bad.evaluation_type == good_or_bad_params[:evaluation_type].to_i
-        good_or_bad.destroy
-      else
-        good_or_bad.update(evaluation_type: good_or_bad_params[:evaluation_type])
-      end
+    set_video
+    if good_or_bad = GoodOrBad.find_by(user_id: current_user.id, video_id: @video.id)
+      good_or_bad.update(evaluation: good_or_bad_params[:evaluation])
     else
-      GoodOrBad.create(user_id: current_user.id, video_id: video.id, evaluation_type: good_or_bad_params[:evaluation_type])
+      GoodOrBad.create(user_id: current_user.id, video_id: @video.id, evaluation: good_or_bad_params[:evaluation])
     end
-    redirect_to video
+    redirect_to @video
   end
 
   private
@@ -141,7 +110,20 @@ class VideosController < ApplicationController
       end     
     end
     
-    def reccomend(related_videos)
+    def count_good_or_bad(video)
+      @good_count = 0
+      good = GoodOrBad.where(video_id: video.id, evaluation: "good")
+      @good_count += good.count unless good.nil?
+      @bad_count = 0
+      bad = GoodOrBad.where(video_id: video.id, evaluation: "bad")
+      @bad_count += bad.count unless bad.nil?
+    end
+    
+    def set_video
+      @video = Video.find_by(id: params[:id])
+    end
+    
+    def recommend(related_videos)
       @video.tags.each do |tag|
         if tag.videos.count < VIDEO_SHOWABLE_MAX_COUNT
           tag.videos.each_with_index do |video, num|
@@ -159,12 +141,8 @@ class VideosController < ApplicationController
     def video_params
       params.require(:video).permit(:title, :thumbnail, :category, :tag_name, :channel_id)
     end
-    
-    def category_id_params
-      params.require(:category_id)
-    end
-    
+
     def good_or_bad_params
-      params.require(:good_or_bad).permit(:evaluation_type)
+      params.require(:good_or_bad).permit(:evaluation)
     end
 end

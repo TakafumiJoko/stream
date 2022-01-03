@@ -5,8 +5,7 @@
 videoer="https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets<%= @video.id %>/<%= @video.thumbnail %>" 
 style="width: 1000px; height: 500px;"
 controls></video>
-<%= button_to("Good #{@good_count}", controller: "videos", action: "change_good_or_bad", method: :video, params: {good_or_bad: {evaluation_type: 0}}) %>
-<%= button_to("Bad #{@bad_count}", controller: "videos", action: "change_good_or_bad", method: :video, params: {good_or_bad: {evaluation_type: 1}}) %>
+<%= render 'evaluation', video: @video %>
 <h2>コメント</h2>
 <div class="new-comment">
   <%= render 'comments/form', video: @video, comment: @comment %>
