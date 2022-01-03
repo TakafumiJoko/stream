@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_02_130935) do
+ActiveRecord::Schema.define(version: 2022_01_02_145358) do
 
   create_table "channels", force: :cascade do |t|
     t.string "name"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2022_01_02_130935) do
     t.integer "video_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "evaluation_type"
+    t.integer "evaluation"
     t.index ["user_id"], name: "index_good_or_bads_on_user_id"
     t.index ["video_id"], name: "index_good_or_bads_on_video_id"
   end
