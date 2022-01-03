@@ -41,7 +41,7 @@ class VideosController < ApplicationController
   end
   
   def category
-    @video = Video.find_by(category: params[:category])
+    @category = params[:category]
     @videos = Video.where(category: params[:category])
   end
   
