@@ -37,7 +37,8 @@ class VideosController < ApplicationController
   
   def home
     @videos = Video.all
-    @trend = Video.joins(:one_day_view).order(count: :desc).limit(10)
+    @history_videos = current_user.histories.order(created_at: :desc).limit(10)
+    @trend_videos = Video.joins(:one_day_view).order(count: :desc).limit(10)
   end
   
   def category
