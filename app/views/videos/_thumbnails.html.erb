@@ -5,6 +5,6 @@
     <% if video.view %>
       <p>再生回数：<%= video.view.count %></p>
     <% end %>
-    <%= link_to(image_tag("https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets#{video.id}/#{video.thumbnail}"), video) %>
+    <%= link_to(image_tag("https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets#{video.id}/#{video.thumbnail}", size: '320x180'), video) %>
   <% end %>
 <% end %>

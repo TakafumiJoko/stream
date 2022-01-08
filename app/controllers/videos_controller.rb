@@ -29,7 +29,7 @@ class VideosController < ApplicationController
     @comment = Comment.new
     @related_videos = []
     recommend(@related_videos)
-    @video.histories.create(user_id: current_user.id)
+    record_browsing_history
     View.count(@video)
     OneDayView.count(@video)
     count_good_or_bad(@video)
@@ -37,7 +37,10 @@ class VideosController < ApplicationController
   
   def home
     @videos = Video.all
-    @trend = Video.joins(:one_day_view).order(count: :desc).limit(10)
+    if current_user 
+      @history_videos = current_user.videos
+    end
+    @trend_videos = Video.joins(:one_day_view).order(count: :desc).limit(10)
   end
   
   def category
@@ -135,6 +138,14 @@ class VideosController < ApplicationController
             end
           end
         end
+      end
+    end
+    
+    def record_browsing_history
+      if history = History.find_by(user_id: current_user.id, video_id: @video.id)
+        history.update(created_at: Time.now, updated_at: Time.now)
+      else
+        History.create(user_id: current_user.id, video_id: @video.id)
       end
     end
     

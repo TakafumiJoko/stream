@@ -2,12 +2,14 @@ class Video < ApplicationRecord
   belongs_to :channel
   has_many :comments, dependent: :destroy
   has_many :histories
+  has_many :videos, through: :histories
   has_one :view
   has_one :one_day_view
   has_many :good_or_bads
   has_many :video_tags
   has_many :tags, through: :video_tags
   enum category: [:music, :movie, :program, :game, :news, :sports, :learning]
+
   
   validates :thumbnail, presence: true
   validates :category, presence: true
