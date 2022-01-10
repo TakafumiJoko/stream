@@ -42,6 +42,7 @@
         <li class="nav-item">
           <%= link_to "学び", videos_category_path(category: 'learning'), class: "nav-link active", 'aria-current': :page %>
         </li>        
+        <!--
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown
@@ -56,11 +57,12 @@
         <li class="nav-item">
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
         </li>
+        -->
       </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      <%= form_with(model: Video.new, url: videos_search_path, local: true, class: "d-flex") do |form| %>
+        <%= form.text_field :title, class: "form-control me-2", "type": "search", "placeholder": "検索", "aria-label": "Search" %>
+        <%= form.submit "検索", class: "btn btn-outline-success", type: "submit" %>
+      <% end %>
     </div>
   </div>
 </nav>
