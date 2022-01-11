@@ -1,10 +1,16 @@
 <% if videos.any? %>
   <% videos.each do |video| %>
-    <p>チャンネル名：<%= video.channel.name %></p>
-    <p>動画タイトル：<%= video.title %></p>
-    <% if video.view %>
-      <p>再生回数：<%= video.view.count %></p>
-    <% end %>
-    <%= link_to(image_tag("https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets#{video.id}/#{video.thumbnail}", size: '320x180'), video) %>
+    <div class="row" style="margin: 100px 0;">
+      <div class="col-sm-6">
+        <%= link_to(image_tag("https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets#{video.id}/#{video.thumbnail}", size: '320x180'), video) %>
+      </div>
+      <div class="col-sm-6">
+        <p>動画タイトル：<%= video.title %></p>
+        <p>チャンネル名：<%= video.channel.name %></p>
+        <% if video.view %>
+          <p>再生回数：<%= video.view.count %></p>
+        <% end %>
+      </div>
+    </div>
   <% end %>
 <% end %>
