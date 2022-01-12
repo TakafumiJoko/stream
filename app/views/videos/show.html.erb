@@ -1,17 +1,19 @@
-<h1>動画タイトル：<%= @video.title %></h1>
-<h2>カテゴリー名：<%= @video.category %></h2>
-<h2>再生回数：<%= @video.view.count %></h2>
-<video src="https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets<%= @video.id %>/<%= @video.title %>" 
-videoer="https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets<%= @video.id %>/<%= @video.thumbnail %>" 
-style="width: 1000px; height: 500px;"
-controls></video>
-<%= render 'evaluation', video: @video %>
-<h2>コメント</h2>
-<div class="new-comment">
-  <%= render 'comments/form', video: @video, comment: @comment %>
+<div class="container" style="width: 80%; margin:0 auto;">
+  <h1>動画タイトル：<%= @video.title %></h1>
+  <h2>カテゴリー名：<%= @video.category %></h2>
+  <h2>再生回数：<%= @video.view.count %></h2>
+  <video src="https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets<%= @video.id %>/<%= @video.title %>" 
+  videoer="https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets<%= @video.id %>/<%= @video.thumbnail %>" 
+  style="width: 1000px; height: 500px;"
+  controls></video>
+  <%= render 'evaluation', video: @video %>
+  <h2>コメント</h2>
+  <div class="new-comment">
+    <%= render 'comments/form', video: @video, comment: @comment %>
+  </div>
+  <div class="comments">
+    <%= render 'comments/video_comments', video: @video %>
+  </div>
+  <h2>関連動画</h2>
+  <%= render 'thumbnails', videos: @related_videos %>
 </div>
-<div class="comments">
-  <%= render 'comments/video_comments', video: @video %>
-</div>
-<h2>関連動画</h2>
-<%= render 'thumbnails', videos: @related_videos %>
