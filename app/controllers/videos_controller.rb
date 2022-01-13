@@ -6,7 +6,6 @@ class VideosController < ApplicationController
 
   def new
     @video = Video.new()
-    @categories = Video.categories.to_a
     @channels = current_user.channels
   end
   
