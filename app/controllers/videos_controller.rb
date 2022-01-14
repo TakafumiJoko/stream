@@ -58,7 +58,9 @@ class VideosController < ApplicationController
   
   def change_good_or_bad
     set_video
-    if good_or_bad = GoodOrBad.find_by(user_id: current_user.id, video_id: @video.id)
+    if good_or_bad = GoodOrBad.find_by(user_id: current_user.id, video_id: @video.id, evaluation: good_or_bad_params[:evaluation])
+      good_or_bad.destroy
+    elsif good_or_bad = GoodOrBad.find_by(user_id: current_user.id, video_id: @video.id)
       good_or_bad.update(evaluation: good_or_bad_params[:evaluation])
     else
       GoodOrBad.create(user_id: current_user.id, video_id: @video.id, evaluation: good_or_bad_params[:evaluation])
