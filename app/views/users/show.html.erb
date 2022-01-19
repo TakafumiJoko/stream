@@ -1,10 +1,6 @@
-<% @user.channels.each do |channel| %>
-  チャンネル名：<%= channel.name %><br>
-  <% channel.videos.each do |video| %>
-    動画タイトル：<%= video.title %><br>
-    カテゴリー名：<%= video.category %><br>
-    <%= link_to(image_tag("https://bucket-for-stream.s3.ap-northeast-1.amazonaws.com/assets#{video.id}/#{video.thumbnail}"), video) %>
+<div class="container" style="width: 50%;">
+  <% @user.channels.each do |channel| %>
+    チャンネル名：<%= channel.name %><br>
+    <%= render 'videos/thumbnails', videos: channel.videos %>
   <% end %>
-<% end %>
-
-<%= link_to("動画投稿ページ", new_video_path) %>
+</div>
