@@ -1,4 +1,8 @@
 <div class="container" style="width: 50%;">
+  
+  <h2>再生回数</h2>
+  <%= render 'thumbnails', videos: @videos %>
+  
   <% if current_user %>
     
     <h2>急上昇</h2>
@@ -8,7 +12,4 @@
     <%= render 'thumbnails', videos: @history_videos %>
     
   <% end %>
-  
-  <h2>再生回数</h2>
-  <%= render 'thumbnails', videos: @videos %>
 </div>
