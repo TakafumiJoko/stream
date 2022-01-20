@@ -1,13 +1,17 @@
 <% if video.comments.present? %>
   <p>コメント件数：<%= video.comments.count %></p>
   <% video.comments.each do |comment| %>
-    <%= comment.user.name %>
-    <%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %>
-    <% if comment.user == current_user %>
-      <div class="comment-delete">
-        <%= link_to "削除", video_comment_path(comment.video, comment), method: :delete, remote: true, data: {confirm: "本当に削除しますか？"} %>
-      </div>
-    <% end %>
+    <ul class="comments_area" style="list-style: none;">
+      <li>
+        <%= comment.user.name %>
+        <%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %>
+        <% if comment.user == current_user %>
+          <div class="comment-delete">
+            <%= link_to "削除", video_comment_path(comment.video, comment), method: :delete, data: {confirm: "本当に削除しますか？"} %>
+          </div>
+        <% end %>
+      </li>
+    </ul>
   <% end %>
 <% else %>
   <p>コメントはまだありません</p>

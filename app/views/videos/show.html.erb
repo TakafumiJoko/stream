@@ -10,10 +10,10 @@
   <h2>再生回数：<%= @video.view.count %></h2>
   <%= render 'evaluation', video: @video %>
   <h2>コメント</h2>
-  <div class="new-comment">
+  <div>
     <%= render 'comments/form', video: @video, comment: @comment %>
   </div>
-  <div class="comments">
+  <div>
     <%= render 'comments/video_comments', video: @video %>
   </div>
   <h2>関連動画</h2>
